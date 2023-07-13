@@ -1,0 +1,10 @@
+.list{
+    display: flex;
+    flex-direction: column;
+}
+
+.line{
+    width: 100%;
+    height: 3px;
+    background-color: grey;
+}
