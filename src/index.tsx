@@ -4,15 +4,34 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
+import {Provider} from 'react-redux'
+import {createStore,Store,applyMiddleware} from 'redux'
+import Reducer from './components/store/reducer';
+import {Ing} from './types/type'
 
+
+type ACT={
+  type:string,
+  itm:Ing,
+  id:string
+}
+type Items={
+  items:Ing[]
+}
+type DispatchType=(args:ACT)=>ACT
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+const store:Store<Items,ACT>& {
+  dispatch: DispatchType
+} =createStore(Reducer)
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <ContextProvider>
     <App />
     </ContextProvider>
+    </Provider>
   </React.StrictMode>
 );
 
