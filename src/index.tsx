@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
 import {createStore,Store,applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
 import Reducer from './components/store/reducer';
 import {Ing} from './types/type'
 
@@ -22,9 +23,12 @@ type DispatchType=(args:ACT)=>ACT
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const store:Store<Items,ACT>& {
-  dispatch: DispatchType
-} =createStore(Reducer)
+const store=createStore(Reducer,applyMiddleware(thunk))
+// const store:Store<Items,ACT>& {
+//   dispatch: DispatchType
+// } =createStore(Reducer)
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 root.render(
   <React.StrictMode>
     <Provider store={store}>

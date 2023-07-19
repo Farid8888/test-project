@@ -8,3 +8,14 @@ export type IN ={
     amount:any,
     title:string,
 }
+
+export type Items={
+    items:Ing[]
+}
+
+export type ARG={
+    type:'ADD ITEMS',
+    itms:Items
+}
+
+export type DispatchItm = (arg:ARG)=>(ARG)

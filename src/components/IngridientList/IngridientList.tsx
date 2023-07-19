@@ -3,6 +3,7 @@ import classes from './IngridientList.module.css'
 import IngridientItem from './IngridientItem'
 import Context from '../context/Context'
 import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner'
+import {Ing,Items} from '../../types/type'
 
 type IngsObj ={
     amount:any,
@@ -11,7 +12,7 @@ type IngsObj ={
 }
 
 type IngsArr={
-ings:IngsObj[]
+ings:Ing[]
 }
 
 const IngridientList:React.FC<IngsArr>=(props)=> {

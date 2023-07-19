@@ -1,11 +1,11 @@
 import React from 'react'
-import {Ing} from '../../types/type'
+import {Ing,Items} from '../../types/type'
 
 
 
-type Items={
-    items:Ing[]
-}
+
+
+
 const initialState:Items={
 items:[]
 }
@@ -13,13 +13,14 @@ items:[]
 
 type ACT={
     type:string,
+    itmArr:Ing[],
     itm:Ing,
     id:string
 }
 
-const Reducer =(state=initialState,action:ACT)=>{
+const Reducer =(state=initialState,action:any):Items=>{
 switch(action.type){
-    case('FETCH'):return state.items.concat(action.itm)
+    case('FETCH'):return {...state,items:action.itmArr}
     case('ADD ITEMS'):
     const findedIndex = state.items.findIndex(item=>item.title === action.itm.title)
     if(findedIndex>=0){
@@ -29,9 +30,12 @@ switch(action.type){
     newArr[findedIndex] = newObj
     return {...state,items:newArr}
 }else{
-    return state.items.concat({...action.itm,id:action.id})
+    const newA = state.items.concat({...action.itm})
+    return {...state,items:newA}
 }
-  case('REMOVE'):return state.items.filter(item=>item.id !== action.id)
+  case('REMOVE'):
+  const filtAr = state.items.filter(item=>item.id !== action.id)
+  return {...state,items:filtAr}
   default:return initialState
 }
 }
