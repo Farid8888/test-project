@@ -18,4 +18,10 @@ export type ARG={
     itms:Items
 }
 
+export type INST={
+items:Ing[],
+loading:boolean,
+error:any
+}
+
 export type DispatchItm = (arg:ARG)=>(ARG)

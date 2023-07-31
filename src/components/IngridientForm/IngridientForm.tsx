@@ -3,23 +3,21 @@ import classes from './IngridientForm.module.css'
 import {IN} from '../../types/type'
 import {useSelector} from 'react-redux'
 import {useAppDispatch} from '../store/hooks'
-import {Items,Ing,DispatchItm} from '../../types/type'
-import {postItems,addItems} from '../store/actions'
+import {Items,Ing} from '../../types/type'
+import {useHook} from '../hooks/customHook'
+import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner'
 
-type Add ={
-    addItems:(items:IN)=>void
-}
 
-const IngridientForm:React.FC<Add> =(props)=>{
+
+const IngridientForm =()=>{
     const items:Ing[] = useSelector((state:Items)=>state.items)
-    const dispatch = useAppDispatch()
-    console.log(items,'nnnnnnnnn')
 const [val,setVal] =useState({
     title:'',
     amount:''
 })
-console.log(val)
-
+const ind = items.findIndex(itm=>itm.title === val.title)
+const itmsInd = items[ind]
+const {sendRequest} = useHook('',itmsInd,val,ind)
     const changeHandler=(event:React.ChangeEvent<HTMLInputElement>)=>{
        const {value,name} = event.target
         setVal(prevSt=>{
@@ -31,21 +29,16 @@ console.log(val)
     
     const submitHandler =(event:React.FormEvent)=>{
      event.preventDefault()
-    const ind = items.findIndex(itm=>itm.title === val.title)
+    
      
      
     ITM = ind >=0 ? {...items[ind],amount:parseInt(items[ind].amount) + parseInt(val.amount)} : val
     URL =ind<0 ? `https://auth-with-hooks-default-rtdb.firebaseio.com/form/.json` :
     `https://auth-with-hooks-default-rtdb.firebaseio.com/form/${items[ind].id}.json`
     console.log(ITM,ind,'ind')
-    fetch(URL,{
-        method:ind>= 0 ? 'PUT': 'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(ITM)
-      }).then(response=>response.json()).then(data=>{
-        dispatch({type:'ADD ITEMS',itm:{...val,id:ind<0 ? data.name : items[ind].id}})
-        })
+    sendRequest(URL,ind>= 0 ? 'PUT': 'POST',ITM)
     }
+
     return(
         <form className={classes.form} onSubmit={submitHandler}>
            <div className={classes.inp}>

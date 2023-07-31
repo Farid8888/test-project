@@ -1,54 +1,33 @@
-import React,{useEffect,useContext} from 'react'
+import React,{useState,useEffect} from 'react'
 import classes from './IngridientsMain.module.css'
 import IngridientForm from '../IngridientForm/IngridientForm'
 import Search from '../Search/Search'
 import IngridientList from '../IngridientList/IngridientList'
 import {IN} from '../../types/type'
 import Context from '../context/Context'
-import {useSelector,useDispatch} from 'react-redux'
-import {Ing,Items} from '../../types/type'
+import {useAppSelector} from '../store/hooks'
+import {INST,Items} from '../../types/type'
+import {useHook} from '../hooks/customHook'
+
 
 const IngredientsMain:React.FC=()=> {
-const ctx = useContext(Context)
-const items:Ing[]= useSelector((state:Items)=>state.items)
-const dispatch = useDispatch()
-const addItems =(items:IN)=>{
-   ctx.addItems(items)
-}
+    const [mainSt,setMainST] = useState()
+    const {sendRequest} =useHook()
 
+const items= useAppSelector((state:INST)=>state.items)
+const loading = useAppSelector(state=>state.loading)
+const error = useAppSelector(state=>state.error);
+
+console.log(items,'itmsmsdjs')
 useEffect(()=>{
-    const sendRequest =async()=>{
-        try{
-            const response = await fetch('https://auth-with-hooks-default-rtdb.firebaseio.com/.json')
-            if(!response.ok){
-                throw new Error('Something going wrong')
-            }
-            const data = await response.json()
-            let ing:Ing[] = []
-            for(let key in data.form){
-                ing=[...ing,
-                {
-                    ...data.form[key],
-                    id:key
-                }
-                ]
-            }
-            dispatch({type:'FETCH',itmArr:ing})
-        
-        }catch(err){
-            console.log(err,'error')
-           
-        }
-       
-    }
-    sendRequest()
-},[dispatch])
+    sendRequest('https://auth-with-hooks-default-rtdb.firebaseio.com/form.json','GET')
+},[sendRequest])
 
   return (
     <div className={classes.main}>
-      <IngridientForm addItems={addItems}/>
+      <IngridientForm/>
       <Search/>
-      <IngridientList ings={items}/>
+      <IngridientList ings={items} loading={loading} error={error}/>
     </div>
   )
 }

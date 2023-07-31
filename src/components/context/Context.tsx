@@ -82,7 +82,6 @@ export const ContextProvider:React.FC<Ch> =(props)=>{
         setIngridients(ing)
         dispatch({type:'RESPONSE'})
     }catch(err){
-        console.log(err,'error')
         dispatch({type:'ERROR',err:err})
     }
         

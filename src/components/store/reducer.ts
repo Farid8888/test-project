@@ -1,26 +1,27 @@
 import React from 'react'
-import {Ing,Items} from '../../types/type'
+import {Ing,INST} from '../../types/type'
 
 
 
 
 
 
-const initialState:Items={
-items:[]
+const initialState:INST={
+items:[],
+loading:false,
+error:''
 }
 
 
-type ACT={
-    type:string,
-    itmArr:Ing[],
-    itm:Ing,
-    id:string
-}
 
-const Reducer =(state=initialState,action:any):Items=>{
+const Reducer =(state=initialState,action:any):INST=>{
 switch(action.type){
     case('FETCH'):return {...state,items:action.itmArr}
+    case('SEARCH'):return {...state,items:action.itms}
+    case('SEND'):return {...state,loading:true}
+    case('RESPONSE'):return {...state,loading:false}
+    case('ERROR'):return {...state,error:action.err,loading:false}
+    case ('CLEAN'):return {...state,error:''}
     case('ADD ITEMS'):
     const findedIndex = state.items.findIndex(item=>item.title === action.itm.title)
     if(findedIndex>=0){
