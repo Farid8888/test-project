@@ -1,0 +1,24 @@
+.statusbar{
+    width: 100%;
+    height: 5rem;
+    background-color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statusbar.pending{
+    background-color: blue;
+}
+
+.statusbar.green{
+    background-color: green;
+}
+
+.statusbar.red{
+    background-color: red;
+}
+
+.status{
+    color: white;
+}

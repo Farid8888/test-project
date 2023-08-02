@@ -1,6 +1,5 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import classes from './IngridientItem.module.css'
-import Context from '../context/Context'
 import {useHook} from '../hooks/customHook'
 
 type Ingridient ={
@@ -10,8 +9,8 @@ type Ingridient ={
 }
 
 const IngridientItem:React.FC<Ingridient>=(props)=> {
-    console.log(props.id,'itemidd')
-    const {sendRequest} = useHook(props.id)
+
+    const {sendRequest} = useHook(props.id,null,null,null,true)
     const remove =()=>{
         sendRequest(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${props.id}.json`,'DELETE')
     }

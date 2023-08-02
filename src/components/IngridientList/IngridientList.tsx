@@ -1,10 +1,9 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import classes from './IngridientList.module.css'
 import IngridientItem from './IngridientItem'
-import Context from '../context/Context'
 import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner'
 import {Ing} from '../../types/type'
-import Modal from '../UI/Modal/Modal'
+
 
 
 type IngsArr={

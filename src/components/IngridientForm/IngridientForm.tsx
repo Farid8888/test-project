@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
 import classes from './IngridientForm.module.css'
-import {IN} from '../../types/type'
 import {useSelector} from 'react-redux'
-import {useAppDispatch} from '../store/hooks'
 import {Items,Ing} from '../../types/type'
 import {useHook} from '../hooks/customHook'
-import LoadingSpinner from '../UI/LoadingSpinner/LoadingSpinner'
+import { useAppSelector,useAppDispatch } from '../store/hooks'
+
 
 
 
 const IngridientForm =()=>{
-    const items:Ing[] = useSelector((state:Items)=>state.items)
+    const items = useAppSelector(state=>state.mainSt.items)
+   const dispatch =useAppDispatch()
+    console.log(items,'itititititi')
 const [val,setVal] =useState({
     title:'',
     amount:''
 })
 const ind = items.findIndex(itm=>itm.title === val.title)
 const itmsInd = items[ind]
-const {sendRequest} = useHook('',itmsInd,val,ind)
+const {sendRequest} = useHook('',itmsInd,val,ind,true)
     const changeHandler=(event:React.ChangeEvent<HTMLInputElement>)=>{
        const {value,name} = event.target
         setVal(prevSt=>{
@@ -30,13 +31,12 @@ const {sendRequest} = useHook('',itmsInd,val,ind)
     const submitHandler =(event:React.FormEvent)=>{
      event.preventDefault()
     
-     
-     
     ITM = ind >=0 ? {...items[ind],amount:parseInt(items[ind].amount) + parseInt(val.amount)} : val
     URL =ind<0 ? `https://auth-with-hooks-default-rtdb.firebaseio.com/form/.json` :
     `https://auth-with-hooks-default-rtdb.firebaseio.com/form/${items[ind].id}.json`
     console.log(ITM,ind,'ind')
     sendRequest(URL,ind>= 0 ? 'PUT': 'POST',ITM)
+    
     }
 
     return(

@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
-import {createStore,Store,applyMiddleware} from 'redux'
+import {createStore,combineReducers,applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import Reducer from './components/store/reducer';
-import {Ing} from './types/type'
+import {statusReducer} from './components/store/statusReducer'
+import {Ing,INST} from './types/type'
 
 
 type ACT={
@@ -23,10 +24,24 @@ type DispatchType=(args:ACT)=>ACT
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const store=createStore(Reducer,applyMiddleware(thunk))
-// const store:Store<Items,ACT>& {
-//   dispatch: DispatchType
-// } =createStore(Reducer)
+
+
+type st={
+  status:string
+}
+  type StoreState={
+    mainSt:INST,
+    statusSt:st
+  }
+
+
+const reducers = combineReducers({
+  mainSt:Reducer,
+  statusSt:statusReducer
+})
+
+const store=createStore(reducers,applyMiddleware(thunk))
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 root.render(

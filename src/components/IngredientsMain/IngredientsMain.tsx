@@ -1,24 +1,22 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect,useMemo} from 'react'
 import classes from './IngridientsMain.module.css'
 import IngridientForm from '../IngridientForm/IngridientForm'
 import Search from '../Search/Search'
 import IngridientList from '../IngridientList/IngridientList'
-import {IN} from '../../types/type'
-import Context from '../context/Context'
 import {useAppSelector} from '../store/hooks'
-import {INST,Items} from '../../types/type'
+import {INST,} from '../../types/type'
 import {useHook} from '../hooks/customHook'
+import StatusBar from '../UI/StatusBar/StatusBar'
+
 
 
 const IngredientsMain:React.FC=()=> {
-    const [mainSt,setMainST] = useState()
-    const {sendRequest} =useHook()
+    const {sendRequest} =useHook(null,null,null,null,false)
 
-const items= useAppSelector((state:INST)=>state.items)
-const loading = useAppSelector(state=>state.loading)
-const error = useAppSelector(state=>state.error);
+const items= useAppSelector((state)=>state.mainSt.items)
+const loading = useAppSelector(state=>state.mainSt.loading)
+const error = useAppSelector(state=>state.mainSt.error);
 
-console.log(items,'itmsmsdjs')
 useEffect(()=>{
     sendRequest('https://auth-with-hooks-default-rtdb.firebaseio.com/form.json','GET')
 },[sendRequest])

@@ -1,13 +1,15 @@
-import {useCallback,useState} from 'react'
+import {useCallback} from 'react'
 import {Ing,IN} from '../../types/type'
 import { useAppDispatch } from '../store/hooks'
+import {useDispatch} from 'react-redux'
+import {send} from '../store/actions'
 
 
-
-export const useHook =(ID?:string,itmsInd?:Ing,val?:IN,ind?:any)=>{
+export const useHook =(ID?:string | null,itmsInd?:Ing | null,val?:IN | null,ind?:any,show?:boolean)=>{
     const dispatch = useAppDispatch()
-    const sendRequest =useCallback(async(url:any,mth?:string,body?:IN | Ing,srch?:boolean)=>{
+    const sendRequest =useCallback(async(url:any,mth?:string,body?:IN | Ing | null)=>{
       dispatch({type:'SEND'})
+      show && dispatch({type:'SENDING',notification:{status:'pending',message:'...Sending'}})
         try{
       
             const response = await fetch(url,{
@@ -23,6 +25,7 @@ export const useHook =(ID?:string,itmsInd?:Ing,val?:IN,ind?:any)=>{
             const data = await response.json()
             console.log(data,'tryyyyyyyyy')
        dispatch({type:'RESPONSE'})
+       show && dispatch({type:'RESPONSING',notification:{status:'success',message:'Success'}})
         if(mth=== 'DELETE'){
            dispatch({type:'REMOVE',id:ID})
         }
@@ -47,15 +50,15 @@ export const useHook =(ID?:string,itmsInd?:Ing,val?:IN,ind?:any)=>{
             
         
         }catch(err:any){
-            console.log(err.message,'erererere')
             let modErr:string
             if(err.message === 'Failed to fetch'){
                 modErr ='Something going wrong'
                 dispatch({type:'ERROR',err:modErr})
+                dispatch({type:'ERRORING',notification:{status:'error',message:'Error'}})
             }
         }
         
-    },[dispatch,val,itmsInd,ind,ID])
+    },[dispatch,val,itmsInd,ind,ID,show])
 
     return{
        sendRequest

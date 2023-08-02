@@ -24,4 +24,11 @@ loading:boolean,
 error:any
 }
 
-export type DispatchItm = (arg:ARG)=>(ARG)
+export type Ob={
+    status:string,
+    message:string
+}
+
+export type ST={
+    status:Ob | null
+}

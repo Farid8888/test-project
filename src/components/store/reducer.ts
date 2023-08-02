@@ -9,7 +9,7 @@ import {Ing,INST} from '../../types/type'
 const initialState:INST={
 items:[],
 loading:false,
-error:''
+error:'',
 }
 
 
@@ -37,7 +37,7 @@ switch(action.type){
   case('REMOVE'):
   const filtAr = state.items.filter(item=>item.id !== action.id)
   return {...state,items:filtAr}
-  default:return initialState
+  default:return state
 }
 }
 export default Reducer

@@ -1,6 +1,6 @@
 import React,{createContext,useState,useCallback,useReducer} from 'react'
 import {IN,Ing} from '../../types/type'
-import {PayloadActionCreator} from '@reduxjs/toolkit'
+
 
 type Ch={
     children:React.ReactNode
@@ -57,7 +57,6 @@ switch(action.type){
 
 export const ContextProvider:React.FC<Ch> =(props)=>{
  const [ingridients,setIngridients] = useState<Ing[]>([])
- const [err,setErr] = useState(false)
  const [status,dispatch] = useReducer(reducer,initialState)
  const searchHandler =useCallback((searchItems:Items[])=>{
     setIngridients(searchItems)
