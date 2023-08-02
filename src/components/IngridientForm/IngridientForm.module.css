@@ -16,11 +16,21 @@
     margin-top: 2px;
 }
 
+.inp.title input{
+    border-bottom: 2px solid rgb(201, 69, 100);
+}
+
+.inp.amount input{
+    border-bottom: 2px solid rgb(201, 69, 100);
+}
+
+
+
 .inp input:focus{
     outline: none;
 }
 
-button{
+.btn{
     background-color: rgb(244, 6, 6);
     padding: 6px 20px;
     border: none;
@@ -29,7 +39,15 @@ button{
     cursor: pointer;
 }
 
-button:hover,
-button.active{
+.btn.valid{
+    cursor: not-allowed;
+    background-color: rgb(151, 151, 151);
+}
+.btn:hover,
+.btn.active{
     background-color: rgb(137, 4, 4);
+}
+
+.btn.valid:hover{
+    background-color:rgb(151, 151, 151);
 }
