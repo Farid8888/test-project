@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
-import {createStore,combineReducers,applyMiddleware} from 'redux'
+import {applyMiddleware} from 'redux'
+import {configureStore} from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
-import Reducer from './components/store/reducer';
-import {statusReducer} from './components/store/statusReducer'
+import Reducer from './components/store/itemsSlice';
+import statusReducer from './components/store/statusSlice'
 import {Ing,INST} from './types/type'
 
 
@@ -35,12 +36,13 @@ type st={
   }
 
 
-const reducers = combineReducers({
+const store = configureStore({
+ reducer:{
   mainSt:Reducer,
   statusSt:statusReducer
+ }
 })
 
-const store=createStore(reducers,applyMiddleware(thunk))
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

@@ -1,8 +1,7 @@
 import {useCallback} from 'react'
 import {Ing,IN} from '../../types/type'
 import { useAppDispatch } from '../store/hooks'
-import {useDispatch} from 'react-redux'
-import {send} from '../store/actions'
+
 
 
 export const useHook =(ID?:string | null,itmsInd?:Ing | null,val?:IN | null,ind?:any,show?:boolean)=>{

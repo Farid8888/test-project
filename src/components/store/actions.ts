@@ -1,41 +1,87 @@
-import {IN} from '../../types/type'
+import {IN,Ing} from '../../types/type'
+import {fetchFun,response as rsp,send,error,addItems as add,remove} from '../store/itemsSlice'
+import { sending,responsing,erroring } from './statusSlice'
 
 
 
 
 
-export const postItems =(itms:IN)=>{
+export const addItems =(ITM:string,itm:any,url:any,mth:string)=>{
     return async (dispatch:any)=>{
+        dispatch(send())
+        dispatch(sending({status:'pending',message:'...Sending'}))
+        try{
+        const response = await fetch(url,{
+            method:mth,
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(ITM)
+        })
+        const data = await response.json()
+        dispatch(rsp())
+        dispatch(responsing({status:'success',message:'Success'}))
+        dispatch(add({...itm.val,id:itm.ind<0 ? data.name : itm.id}))
+        }catch(err:any){
+            let modErr:string
+            if(err.message === 'Failed to fetch'){
+                modErr ='Something going wrong'
+                dispatch(error(modErr))
+                dispatch(erroring({status:'error',message:'Error'}))
+            }
+        }
         
-        dispatch({type:'ADD ITEMS',itm:itms})
+    }
+}
+export const fetchArr =(query:string)=>{
+    return async(dispatch:any)=>{
+        dispatch(send())
+        query && dispatch(sending({status:'pending',message:'...Sending'}))
+         try{
+           const response = await fetch(`https://auth-with-hooks-default-rtdb.firebaseio.com/form.json${query}`)
+           const data = await response.json()
+           let itemArr:Ing[]  = []
+           for(let key in data){
+            itemArr=[...itemArr,{
+                ...data[key],
+                id:key
+            }]
+           }
+           dispatch(rsp())
+           query && dispatch(responsing({status:'success',message:'Success'}))
+           dispatch(fetchFun(itemArr))
+         }catch(err:any){
+            let modErr:string
+            if(err.message === 'Failed to fetch'){
+                modErr ='Something going wrong'
+                dispatch(error(modErr))
+                query && dispatch(erroring({status:'error',message:'Error'}))
+            }
+         }
     }
 }
 
 
-
-// export const addItems =(itms:IN)=>{
-//     return ({type:'ADD ITEMS',itm:itms})
-// }
-
-
-
-export const response=()=>{
+export const deleteFun =(id:string,mth:string)=>{
     return async (dispatch:any)=>{
-       dispatch({type:'RESPONSE'})
-       dispatch({type:'RESPONSING'})
+        dispatch(send())
+        dispatch(sending({status:'pending',message:'...Sending'}))
+        try{
+        const response = await fetch(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${id}.json`,{
+            method:mth
+        })
+        const data = await response.json()
+        dispatch(rsp())
+        dispatch(responsing({status:'success',message:'Success'}))
+        dispatch(remove(id))
+        }catch(err:any){
+            let modErr:string
+            if(err.message === 'Failed to fetch'){
+                modErr ='Something going wrong'
+                dispatch(error(modErr))
+                dispatch(erroring({status:'error',message:'Error'}))
+            }
+        }
+        
     }
 }
 
 
-export const send =()=>{
-    return async (dispatch:any)=>{
-        dispatch({type:'SEND'})
-       
-    }
-}
-
-export const error=()=>{
-    return async (dispatch:any)=>{
-        dispatch({type:'ERROR'})
-    }
-}

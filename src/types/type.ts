@@ -32,3 +32,10 @@ export type Ob={
 export type ST={
     status:Ob | null
 }
+
+
+
+export type NTF={
+    status:string,
+    message:string
+}

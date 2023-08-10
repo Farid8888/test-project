@@ -1,13 +1,15 @@
 import React,{useEffect,useState,useRef} from 'react'
 import classes from './Search.module.css'
 import {useHook} from '../hooks/customHook'
-import {useAppSelector} from '../store/hooks'
+import {useAppSelector,useAppDispatch} from '../store/hooks'
+import {fetchArr} from '../store/actions'
 
 
 
 const Search=()=> {
     const {sendRequest} = useHook(null,null,null,null,true)
     const [srch,setSrch] = useState(' ')
+    const dispatch = useAppDispatch() 
     const status = useAppSelector(state=>state.statusSt.status?.status)
      const searchRef = useRef<HTMLInputElement>(null)
     const changeHandler =(event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -20,13 +22,13 @@ const Search=()=> {
                 console.log('sdsjnjsnjdsnjdknsdjk')
                 if(srch === srchRef){
                     const query = srch.length === 0 ? '' : `?orderBy="title"&equalTo="${srch}"`
-                    sendRequest(`https://auth-with-hooks-default-rtdb.firebaseio.com/form.json${query}`,'GET')
+                    dispatch(fetchArr(query))
                 }
             },4000)
         return ()=>{
             clearTimeout(timer)
         }
-     },[srch,sendRequest])
+     },[srch,dispatch])
   return (
     <div className={classes.search}>
       <p>Filter By</p>

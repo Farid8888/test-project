@@ -1,6 +1,7 @@
 import React from 'react'
 import classes from './IngridientItem.module.css'
-import {useHook} from '../hooks/customHook'
+import {useAppDispatch} from '../store/hooks'
+import {deleteFun} from '../store/actions'
 
 type Ingridient ={
     amount:any,
@@ -9,10 +10,9 @@ type Ingridient ={
 }
 
 const IngridientItem:React.FC<Ingridient>=(props)=> {
-
-    const {sendRequest} = useHook(props.id,null,null,null,true)
+const dispatch = useAppDispatch()
     const remove =()=>{
-        sendRequest(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${props.id}.json`,'DELETE')
+        dispatch(deleteFun(props.id,'DELETE'))
     }
   return (
     <div className={classes.item} onClick={remove}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './IngridientForm.module.css'
-import {useHook} from '../hooks/customHook'
-import { useAppSelector } from '../store/hooks'
+import {addItems} from '../store/actions'
+import { useAppSelector,useAppDispatch } from '../store/hooks'
 
 
 type V={
@@ -11,6 +11,7 @@ type V={
 }
 
 const IngridientForm =()=>{
+    const dispatch = useAppDispatch()
     const items = useAppSelector(state=>state.mainSt.items)
     const [foc,setFoc] = useState(false)
     const [amt,setAmt] = useState(false)
@@ -20,8 +21,6 @@ const [val,setVal] =useState({
     amount:''
 })
 const ind = items.findIndex(itm=>itm.title === val.title)
-const itmsInd = items[ind]
-const {sendRequest} = useHook('',itmsInd,val,ind,true)
     const changeHandler=(event:React.ChangeEvent<HTMLInputElement>)=>{
        const {value,name} = event.target
         setVal(prevSt=>{
@@ -43,12 +42,12 @@ const {sendRequest} = useHook('',itmsInd,val,ind,true)
     
     const submitHandler =(event:React.FormEvent)=>{
      event.preventDefault()
-    
     ITM = ind >=0 ? {...items[ind],amount:parseInt(items[ind].amount) + parseInt(val.amount)} : val
     URL =ind<0 ? `https://auth-with-hooks-default-rtdb.firebaseio.com/form/.json` :
     `https://auth-with-hooks-default-rtdb.firebaseio.com/form/${items[ind].id}.json`
-    
-        sendRequest(URL,ind>= 0 ? 'PUT': 'POST',ITM)
+    const mth = ind>= 0 ? 'PUT': 'POST'
+    const itms = {val,ind,id:items[ind]}
+        dispatch(addItems(ITM,itms,URL,mth))
     }
 
     return(
