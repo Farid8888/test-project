@@ -4,7 +4,7 @@ import IngridientForm from '../IngridientForm/IngridientForm'
 import Search from '../Search/Search'
 import IngridientList from '../IngridientList/IngridientList'
 import {useAppSelector,useAppDispatch} from '../store/hooks'
-import {fetchArr} from '../store/actions'
+import {mainFetch} from '../store/itemsSlice'
 import {INST,} from '../../types/type'
 import {useHook} from '../hooks/customHook'
 import StatusBar from '../UI/StatusBar/StatusBar'
@@ -20,7 +20,8 @@ const error = useAppSelector(state=>state.mainSt.error);
 
 useEffect(()=>{
     // sendRequest('https://auth-with-hooks-default-rtdb.firebaseio.com/form.json','GET')
- dispatch(fetchArr(''))
+//  dispatch(fetchArr(''))
+dispatch(mainFetch({query:''}))
 },[dispatch])
 
   return (

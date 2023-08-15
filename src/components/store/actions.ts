@@ -7,30 +7,16 @@ import { sending,responsing,erroring } from './statusSlice'
 
 
 export const addItems =(ITM:string,itm:any,url:any,mth:string)=>{
-    return async (dispatch:any)=>{
-        dispatch(send())
-        dispatch(sending({status:'pending',message:'...Sending'}))
-        try{
-        const response = await fetch(url,{
-            method:mth,
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(ITM)
-        })
-        const data = await response.json()
-        dispatch(rsp())
-        dispatch(responsing({status:'success',message:'Success'}))
-        dispatch(add({...itm.val,id:itm.ind<0 ? data.name : itm.id}))
-        }catch(err:any){
-            let modErr:string
-            if(err.message === 'Failed to fetch'){
-                modErr ='Something going wrong'
-                dispatch(error(modErr))
-                dispatch(erroring({status:'error',message:'Error'}))
-            }
-        }
-        
+    return{
+      ITM,
+      itm,
+      url,
+      mth
+    }  
     }
-}
+
+
+    
 export const fetchArr =(query:string)=>{
     return async(dispatch:any)=>{
         dispatch(send())

@@ -2,7 +2,7 @@ import React,{useEffect,useState,useRef} from 'react'
 import classes from './Search.module.css'
 import {useHook} from '../hooks/customHook'
 import {useAppSelector,useAppDispatch} from '../store/hooks'
-import {fetchArr} from '../store/actions'
+import {mainSearch} from '../store/itemsSlice'
 
 
 
@@ -22,7 +22,7 @@ const Search=()=> {
                 console.log('sdsjnjsnjdsnjdknsdjk')
                 if(srch === srchRef){
                     const query = srch.length === 0 ? '' : `?orderBy="title"&equalTo="${srch}"`
-                    dispatch(fetchArr(query))
+                    dispatch(mainSearch({query}))
                 }
             },4000)
         return ()=>{

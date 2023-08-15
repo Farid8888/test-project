@@ -1,7 +1,9 @@
 export  type Ing={
     amount:any,
     title:string,
-    id:string
+    id:string,
+    name?:string,
+    
 }
 
 export type IN ={
@@ -38,4 +40,16 @@ export type ST={
 export type NTF={
     status:string,
     message:string
+}
+
+
+export type SAGITM={
+    ITM:string,     
+    itms:any,
+    URL:any,
+    mth:string
+}
+
+export type ID={
+    id:string
 }

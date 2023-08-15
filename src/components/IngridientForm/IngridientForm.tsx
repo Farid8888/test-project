@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import classes from './IngridientForm.module.css'
-import {addItems} from '../store/actions'
+import {mainAddItems} from '../store/itemsSlice'
 import { useAppSelector,useAppDispatch } from '../store/hooks'
+
 
 
 type V={
@@ -45,9 +46,9 @@ const ind = items.findIndex(itm=>itm.title === val.title)
     ITM = ind >=0 ? {...items[ind],amount:parseInt(items[ind].amount) + parseInt(val.amount)} : val
     URL =ind<0 ? `https://auth-with-hooks-default-rtdb.firebaseio.com/form/.json` :
     `https://auth-with-hooks-default-rtdb.firebaseio.com/form/${items[ind].id}.json`
-    const mth = ind>= 0 ? 'PUT': 'POST'
+    const mth = ind>= 0 ? 'put': 'post'
     const itms = {val,ind,id:items[ind]}
-        dispatch(addItems(ITM,itms,URL,mth))
+        dispatch(mainAddItems({ITM,itms,URL,mth}))
     }
 
     return(

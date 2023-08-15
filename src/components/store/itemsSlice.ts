@@ -1,5 +1,5 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit'
-import {INST,Ing} from '../../types/type'
+import {INST,Ing,SAGITM,ID} from '../../types/type'
 
 
 const initialState:INST={
@@ -7,7 +7,9 @@ const initialState:INST={
     loading:false,
     error:'',
     }
-
+type Q ={
+   query?:any
+}
 const itemsSlice=createSlice({
     name:'items',
     initialState,
@@ -15,8 +17,14 @@ const itemsSlice=createSlice({
         fetchFun:(state,action:PayloadAction<Ing[]>)=>{
            state.items = action.payload
         },
+        mainFetch:(state,action:PayloadAction<Q>)=>{
+           
+        },
         search:(state,action:PayloadAction<Ing[]>)=>{
             state.items = action.payload
+         },
+         mainSearch:(state,action)=>{
+
          },
          send:(state)=>{
             state.loading = true
@@ -43,12 +51,18 @@ const itemsSlice=createSlice({
     state.items=newA
 }
          },
+         mainAddItems:(state,action:PayloadAction<SAGITM>)=>{
+            //  state.loading =false
+         },
          remove:(state,action:PayloadAction<string>)=>{
             const filtAr = state.items.filter(item=>item.id !== action.payload)
              state.items=filtAr
          },
+         mainRemove:(state,action:PayloadAction<string>)=>{
+
+         }
     }
 })
 
-export const {fetchFun,search,send,remove,response,error,addItems,clean} = itemsSlice.actions
+export const {fetchFun,search,send,remove,response,error,addItems,clean,mainAddItems,mainFetch,mainSearch,mainRemove} = itemsSlice.actions
 export default itemsSlice.reducer

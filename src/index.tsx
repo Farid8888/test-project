@@ -5,47 +5,32 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
-import {applyMiddleware} from 'redux'
+import {applyMiddleware,createStore} from 'redux'
 import {configureStore} from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
 import Reducer from './components/store/itemsSlice';
 import statusReducer from './components/store/statusSlice'
 import {Ing,INST} from './types/type'
+import createSagaMiddleware from  'redux-saga'
+import {watchSagas} from './components/store/index'
 
 
-type ACT={
-  type:string,
-  itm:Ing,
-  id:string
-}
-type Items={
-  items:Ing[]
-}
-type DispatchType=(args:ACT)=>ACT
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-
-
-type st={
-  status:string
-}
-  type StoreState={
-    mainSt:INST,
-    statusSt:st
-  }
-
+const sagaMidlleware = createSagaMiddleware()
 
 const store = configureStore({
  reducer:{
   mainSt:Reducer,
   statusSt:statusReducer
- }
+ },
+ middleware:[sagaMidlleware]
 })
-
+sagaMidlleware.run(watchSagas)
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
