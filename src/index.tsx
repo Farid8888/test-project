@@ -5,12 +5,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
-import {applyMiddleware,createStore} from 'redux'
 import {configureStore} from '@reduxjs/toolkit'
-import thunk from 'redux-thunk'
 import Reducer from './components/store/itemsSlice';
 import statusReducer from './components/store/statusSlice'
-import {Ing,INST} from './types/type'
 import createSagaMiddleware from  'redux-saga'
 import {watchSagas} from './components/store/index'
 
@@ -41,7 +38,4 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

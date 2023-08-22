@@ -1,5 +1,5 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit'
-import {INST,Ing,SAGITM,ID} from '../../types/type'
+import {INST,Ing,SAGITM} from '../../types/type'
 
 
 const initialState:INST={

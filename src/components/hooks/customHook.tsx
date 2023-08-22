@@ -16,20 +16,16 @@ export const useHook =(ID?:string | null,itmsInd?:Ing | null,val?:IN | null,ind?
                 headers:{"Content-Type":"application/json"},
                 body:body && JSON.stringify(body)
             })
-            console.log(response,'llllllllll')
             if(!response.ok){
                 
-                console.log("throw er")
             }
             const data = await response.json()
-            console.log(data,'tryyyyyyyyy')
        dispatch({type:'RESPONSE'})
        show && dispatch({type:'RESPONSING',notification:{status:'success',message:'Success'}})
         if(mth=== 'DELETE'){
            dispatch({type:'REMOVE',id:ID})
         }
         else if(mth === 'GET'){
-         console.log('gggggggetttt')
             let ing:Ing[] = []
             for(let key in data){
                 ing=[...ing,
@@ -44,7 +40,7 @@ export const useHook =(ID?:string | null,itmsInd?:Ing | null,val?:IN | null,ind?
        
         else {
             dispatch({type:'ADD ITEMS',itm:{...val,id:ind<0 ? data.name : itmsInd?.id}})
-            console.log('notget')
+
         }
             
         

@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import {ID,Ing,SAGITM} from '../../types/type'
+import {Ing,SAGITM} from '../../types/type'
 import {fetchFun,response as rsp,send,error,addItems as add,remove} from './itemsSlice'
 import { sending,responsing,erroring } from './statusSlice'
-import {put,call} from 'redux-saga/effects'
+import {put} from 'redux-saga/effects'
 import axios from 'axios'
 
 
@@ -11,11 +11,6 @@ type Res ={
 }
 type Data={
     data:Res,
-}
-type ITM ={
-    val:any,
-    ind:any,
-    id?:string
 }
 
 

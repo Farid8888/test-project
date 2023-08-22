@@ -1,13 +1,12 @@
 import React,{useEffect,useState,useRef} from 'react'
 import classes from './Search.module.css'
-import {useHook} from '../hooks/customHook'
 import {useAppSelector,useAppDispatch} from '../store/hooks'
 import {mainSearch} from '../store/itemsSlice'
 
 
 
 const Search=()=> {
-    const {sendRequest} = useHook(null,null,null,null,true)
+  console.log('search')
     const [srch,setSrch] = useState(' ')
     const dispatch = useAppDispatch() 
     const status = useAppSelector(state=>state.statusSt.status?.status)
@@ -19,7 +18,6 @@ const Search=()=> {
     useEffect(()=>{
         const srchRef = searchRef.current!.value
             const timer = setTimeout(()=>{
-                console.log('sdsjnjsnjdsnjdknsdjk')
                 if(srch === srchRef){
                     const query = srch.length === 0 ? '' : `?orderBy="title"&equalTo="${srch}"`
                     dispatch(mainSearch({query}))
@@ -40,4 +38,4 @@ const Search=()=> {
   )
 }
 
-export default Search
+export default React.memo(Search)

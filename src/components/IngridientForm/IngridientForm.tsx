@@ -5,11 +5,7 @@ import { useAppSelector,useAppDispatch } from '../store/hooks'
 
 
 
-type V={
-    title:string,
-    amount:string,
-    [key:string]:string
-}
+
 
 const IngridientForm =()=>{
     const dispatch = useAppDispatch()
@@ -37,7 +33,6 @@ const ind = items.findIndex(itm=>itm.title === val.title)
     }
 
     const validation =Object.values(val).some(item=>item === '')
- console.log(validation,'bblblblbbl')
     let URL:any
     let ITM:any
     

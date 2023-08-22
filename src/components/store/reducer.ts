@@ -1,5 +1,5 @@
-import React from 'react'
-import {Ing,INST} from '../../types/type'
+
+import {INST} from '../../types/type'
 
 
 

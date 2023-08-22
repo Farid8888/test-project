@@ -1,5 +1,5 @@
-import {IN,Ing} from '../../types/type'
-import {fetchFun,response as rsp,send,error,addItems as add,remove} from '../store/itemsSlice'
+import {Ing} from '../../types/type'
+import {fetchFun,response as rsp,send,error,remove} from '../store/itemsSlice'
 import { sending,responsing,erroring } from './statusSlice'
 
 
@@ -51,10 +51,10 @@ export const deleteFun =(id:string,mth:string)=>{
         dispatch(send())
         dispatch(sending({status:'pending',message:'...Sending'}))
         try{
-        const response = await fetch(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${id}.json`,{
+        await fetch(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${id}.json`,{
             method:mth
         })
-        const data = await response.json()
+
         dispatch(rsp())
         dispatch(responsing({status:'success',message:'Success'}))
         dispatch(remove(id))
