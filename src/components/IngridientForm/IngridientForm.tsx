@@ -63,4 +63,4 @@ const ind = items.findIndex(itm=>itm.title === val.title)
     )
 }
 
-export default IngridientForm
+export default React.memo(IngridientForm)

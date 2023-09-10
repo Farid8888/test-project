@@ -1,6 +1,6 @@
 
 import {takeEvery} from 'redux-saga/effects'
-import {addItemsAsync,fetchArr,deleteFun} from '../store/sagas'
+import {addItemsAsync,fetchArr,deleteFun,itemFun} from '../store/sagas'
 import { all, fork } from "redux-saga/effects";
 
 
@@ -12,6 +12,7 @@ yield takeEvery('items/mainAddItems',addItemsAsync)
 yield takeEvery('items/mainFetch',fetchArr)
 yield takeEvery('items/mainSearch',fetchArr)
 yield takeEvery('items/mainRemove',deleteFun)
+yield takeEvery('items/mainItem',itemFun)
 } 
 
 // export function* watchFetch(){

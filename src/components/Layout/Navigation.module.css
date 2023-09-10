@@ -1,0 +1,38 @@
+.navigation{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 5rem;
+    align-items: center;
+}
+
+.navigation ul{
+    list-style: none;
+    width: 100%;
+    /* display: inline-block; */
+    /* flex-direction: row;
+    justify-content: space-between; */
+    /* width: 15rem;
+    max-width: 95%;
+    margin: 0 auto; */
+}
+.navigation li{
+    display: inline-block;
+    padding: 0 2rem;
+}
+
+a{
+    text-decoration: none;
+    font-size: 20px;
+    /* color: black; */
+}
+.active{
+    color:red
+}
+.active:hover{
+    color: red;
+}
+
+a:hover{
+    color: rgb(123, 112, 112);
+}

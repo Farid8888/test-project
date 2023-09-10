@@ -1,6 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import {Ing,SAGITM} from '../../types/type'
-import {fetchFun,response as rsp,send,error,addItems as add,remove} from './itemsSlice'
+import {fetchFun,response as rsp,send,error,addItems as add,remove, response} from './itemsSlice'
 import { sending,responsing,erroring } from './statusSlice'
 import {put} from 'redux-saga/effects'
 import axios from 'axios'
@@ -12,6 +12,8 @@ type Res ={
 type Data={
     data:Res,
 }
+
+
 
 
 export function* addItemsAsync (action:PayloadAction<SAGITM>){
@@ -88,4 +90,21 @@ export function* deleteFun (action:PayloadAction<string>){
         
     }
 
+     export function* itemFun(action:PayloadAction<string>){
+        console.log('kfmsdkfmskldm')
+      yield put(send())
+      yield put(sending({status:'pending',message:'.Sending'}))
+      try{
+        const rsp:{data:Ing} =yield axios.get(`https://auth-with-hooks-default-rtdb.firebaseio.com/form/${action.payload}.json`)
+        const data= rsp.data
+        let itemArr:Ing[] =[]
+        itemArr.push(data)
+        console.log(rsp,data)
+        yield put(responsing({status:'success',message:'Success'}))
+        yield put(response())
+        yield put(fetchFun(itemArr))
+      }catch(err){
+         
+      }
+     }
 

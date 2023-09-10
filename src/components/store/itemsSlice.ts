@@ -60,9 +60,12 @@ const itemsSlice=createSlice({
          },
          mainRemove:(state,action:PayloadAction<string>)=>{
 
+         },
+         mainItem:(state,action:PayloadAction<string>)=>{
+
          }
     }
 })
 
-export const {fetchFun,search,send,remove,response,error,addItems,clean,mainAddItems,mainFetch,mainSearch,mainRemove} = itemsSlice.actions
+export const {fetchFun,search,send,remove,response,error,addItems,clean,mainAddItems,mainFetch,mainSearch,mainRemove,mainItem} = itemsSlice.actions
 export default itemsSlice.reducer

@@ -53,3 +53,10 @@ export type SAGITM={
 export type ID={
     id:string
 }
+
+export type Ingridient ={
+    amount:any,
+    title:string,
+    id:string,
+    cl:string
+}

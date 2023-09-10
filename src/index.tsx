@@ -10,7 +10,7 @@ import Reducer from './components/store/itemsSlice';
 import statusReducer from './components/store/statusSlice'
 import createSagaMiddleware from  'redux-saga'
 import {watchSagas} from './components/store/index'
-
+import {BrowserRouter} from 'react-router-dom'
 
 const sagaMidlleware = createSagaMiddleware()
 
@@ -29,13 +29,15 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <>
+    <BrowserRouter>
     <Provider store={store}>
     <ContextProvider>
     <App />
     </ContextProvider>
     </Provider>
-  </React.StrictMode>
+    </BrowserRouter>
+  </>
 );
 
 reportWebVitals();

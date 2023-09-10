@@ -8,3 +8,8 @@
     height: 3px;
     background-color: grey;
 }
+
+.cl:hover{
+    background-color: rgba(128, 128, 128, 0.299);
+    cursor: pointer;
+}

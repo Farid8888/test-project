@@ -1,27 +1,21 @@
 import React from 'react';
-import IngredientsMain from './components/IngredientsMain/IngredientsMain';
-import Modal from './components/UI/Modal/Modal';
-import { useAppSelector,useAppDispatch } from './components/store/hooks';
-import StatusBar from './components/UI/StatusBar/StatusBar'
-import {clean} from './components/store/itemsSlice'
+import Layout from './components/Layout/Layout';
+import {Routes,Route,Navigate} from 'react-router'
+import {MainComponent,ListComponent,AuthComponent,ItemComponent} from './lazy/lazy';
+
+
 
 function App() {
-  const dispatch = useAppDispatch()
-  const error =useAppSelector(state=>state.mainSt.error)
-const status = useAppSelector(state=>state.statusSt.status)
-const modalHandler =()=>{
-  dispatch(clean())
-}
-  
   return (
-    <div >
-      {status && <StatusBar/>}
-      {error && <Modal modalHandler={modalHandler}>
-        <h2>{error}</h2>
-        <button type='button' onClick={modalHandler}>Go Back</button>
-        </Modal>}
-      <IngredientsMain/>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path='/' element={MainComponent}/>
+        <Route path='/auth' element={AuthComponent}/>
+        <Route path='/list' element={ListComponent}/>
+        <Route path='/list/:id' element={ItemComponent}/>
+        <Route path='*' element={<Navigate to='/' replace/>}/>
+      </Routes>
+    </Layout>
   );
 }
 

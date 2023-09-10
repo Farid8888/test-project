@@ -17,7 +17,7 @@ const IngridientList:React.FC<IngsArr>=(props)=> {
 let content
 if(props.ings.length>0){
     content=props.ings.map(ing=>{
-        return <IngridientItem key={ing.id} amount={ing.amount} title={ing.title} id={ing.id}/>
+        return <IngridientItem cl={classes.cl} key={ing.id} amount={ing.amount} title={ing.title} id={ing.id}/>
     })
 }else{
     content=<div style={{textAlign:'center',marginTop:'2rem'}}>
