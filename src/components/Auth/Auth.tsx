@@ -1,24 +1,55 @@
-import React from 'react'
+import React,{useContext,useState} from 'react'
 import classes from './Auth.module.css'
-import Card from '../UI/Card/Card'
+import { AuthContext } from '../context/AuthContext'
+import {ITM} from '../../types/type'
 
-export default function Auth() {
+const Auth=()=> {
+  const [signedIn,setSign] = useState(false)
+  const [val,setVal] = useState<ITM>({
+    email:'',
+    password:'',
+    returnSecureToken:true
+  })
+  const authFunc = useContext(AuthContext).authHandler
+  const data = useContext(AuthContext).data
+  const Errmsg = useContext(AuthContext).error.Errmsg
+  const Paserr = useContext(AuthContext).error.Paserr
+const btnHandler =()=>{
+setSign(prevst=>!prevst)
+}
+const changeHandler=(e:React.ChangeEvent<HTMLInputElement>)=>{
+const {value,name} = e.target
+setVal(prevst=>{
+  return {...prevst,[name]:value}
+})
+}
+const API = 'AIzaSyCLeJqvFuVUMVHrMMq0qSmm3wqBnVB4szs'
+const URL = signedIn ? `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API}`
+: `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API}`
+const submitHandler =(event:React.FormEvent)=>{
+  event.preventDefault()
+  authFunc(URL,val)
+}
+console.log(data,'token')
   return (
     <div className={classes.auth}>
-       <form className={classes.form}>
+       <form className={classes.form} onSubmit={submitHandler}>
            <div className={classes.input}>
             <label htmlFor='email'>Email</label>
-            <input id='email' placeholder='Please enter your email' required name='email'/>
+            <input id='email' type='email' placeholder='Please enter your email' required name='email' onChange={changeHandler}/>
+            {Errmsg && <p className={classes.err}>{Errmsg}</p>}
            </div>
            <div className={classes.input}>
             <label htmlFor='password'>Password</label>
-            <input id='password' placeholder='Please enter your password' name='password' required/>
+            <input id='password' type='password' placeholder='Please enter your password' name='password' required onChange={changeHandler}/>
+            {Paserr && <p className={classes.err}>{Paserr}</p>}
            </div>
            <div className={classes.btn}>
-           <button type='submit'>Log in</button>
-           <button type='submit'>Sign up</button>
+           <button type='submit'>SUBMIT</button>
+           <button type='button' onClick={btnHandler}>SWITCH TO {!signedIn ? 'LOG IN' : 'SIGH UP'}</button>
            </div>
        </form>
     </div>
   )
 }
+export default Auth

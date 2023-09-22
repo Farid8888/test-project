@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ContextProvider } from './components/context/Context';
 import {Provider} from 'react-redux'
 import {configureStore} from '@reduxjs/toolkit'
 import Reducer from './components/store/itemsSlice';
@@ -11,6 +10,7 @@ import statusReducer from './components/store/statusSlice'
 import createSagaMiddleware from  'redux-saga'
 import {watchSagas} from './components/store/index'
 import {BrowserRouter} from 'react-router-dom'
+import AuthContextProvider from './components/context/AuthContext';
 
 const sagaMidlleware = createSagaMiddleware()
 
@@ -31,11 +31,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <>
     <BrowserRouter>
+    <AuthContextProvider>
     <Provider store={store}>
-    <ContextProvider>
     <App />
-    </ContextProvider>
     </Provider>
+    </AuthContextProvider>
     </BrowserRouter>
   </>
 );

@@ -29,9 +29,23 @@ input{
     border: none;
     border-radius: 2px;
     color: white;
+    cursor: pointer;
 }
 
 .btn button:last-child{
     background-color: rgb(255, 0, 89);
     margin-left: 10px;
+}
+
+.btn button:hover{
+    background-color: rgb(165, 165, 238);
+}
+
+.btn button:hover:last-child{
+    background-color: rgb(218, 98, 98);
+}
+
+.err{
+    margin: 0;
+    color:red
 }
