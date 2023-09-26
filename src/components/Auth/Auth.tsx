@@ -1,7 +1,9 @@
-import React,{useContext,useState} from 'react'
+import React,{useContext,useState,useEffect} from 'react'
 import classes from './Auth.module.css'
 import { AuthContext } from '../context/AuthContext'
 import {ITM} from '../../types/type'
+import {sagaConnect,getData,clean} from '../store/authSlice'
+import {useAppSelector,useAppDispatch} from '../store/hooks'
 
 const Auth=()=> {
   const [signedIn,setSign] = useState(false)
@@ -10,10 +12,15 @@ const Auth=()=> {
     password:'',
     returnSecureToken:true
   })
-  const authFunc = useContext(AuthContext).authHandler
-  const data = useContext(AuthContext).data
-  const Errmsg = useContext(AuthContext).error.Errmsg
-  const Paserr = useContext(AuthContext).error.Paserr
+  const data = useAppSelector(state=>state.authState.data)
+  const Errmsg = useAppSelector(state=>state.authState.error.Errmsg)
+  const Paserr =useAppSelector(state=>state.authState.error.Paserr)
+  const dispatch = useAppDispatch()
+
+  // const authFunc = useContext(AuthContext).authHandler
+  // const data = useContext(AuthContext).data
+  // const Errmsg = useContext(AuthContext).error.Errmsg
+  // const Paserr = useContext(AuthContext).error.Paserr
 const btnHandler =()=>{
 setSign(prevst=>!prevst)
 }
@@ -28,9 +35,9 @@ const URL = signedIn ? `https://identitytoolkit.googleapis.com/v1/accounts:signI
 : `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API}`
 const submitHandler =(event:React.FormEvent)=>{
   event.preventDefault()
-  authFunc(URL,val)
+  dispatch(sagaConnect({URL:URL,val:val}))
 }
-console.log(data,'token')
+
   return (
     <div className={classes.auth}>
        <form className={classes.form} onSubmit={submitHandler}>

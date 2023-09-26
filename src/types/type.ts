@@ -67,9 +67,10 @@ export type AUTH = {
 };
 
 export type AUTHDATA = {
-  token: string;
+  idToken: string;
   expiresIn: string;
-  userId: string;
+  localId: string;
+  error:any
 };
 export type ITM = {
   email: string;
@@ -85,3 +86,17 @@ export type DATA = {
     Errmsg: string;
   };
 };
+
+export type DATASAGA = {
+  data: AUTH ;
+  error: {
+    Paserr: string;
+    Errmsg: string;
+  };
+};
+
+export type SAGAACT={
+  URL: string, 
+  val: ITM
+}
+

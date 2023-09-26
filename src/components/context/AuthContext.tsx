@@ -115,6 +115,7 @@ const AuthContextProvider = (props: CH) => {
     userId: "",
     });
     localStorage.removeItem("token");
+    localStorage.removeItem("expire")
   };
   const cleanErr = () => {
     setError({

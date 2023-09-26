@@ -7,6 +7,7 @@ import {Provider} from 'react-redux'
 import {configureStore} from '@reduxjs/toolkit'
 import Reducer from './components/store/itemsSlice';
 import statusReducer from './components/store/statusSlice'
+import AuthSlice from './components/store/authSlice';
 import createSagaMiddleware from  'redux-saga'
 import {watchSagas} from './components/store/index'
 import {BrowserRouter} from 'react-router-dom'
@@ -17,7 +18,8 @@ const sagaMidlleware = createSagaMiddleware()
 const store = configureStore({
  reducer:{
   mainSt:Reducer,
-  statusSt:statusReducer
+  statusSt:statusReducer,
+  authState:AuthSlice
  },
  middleware:[sagaMidlleware]
 })
@@ -28,6 +30,8 @@ export type AppDispatch = typeof store.dispatch
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+
 root.render(
   <>
     <BrowserRouter>
