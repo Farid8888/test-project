@@ -11,7 +11,6 @@ import statusReducer from './components/store/statusSlice'
 import createSagaMiddleware from  'redux-saga'
 import {watchSagas} from './components/store/index'
 
-
 const sagaMidlleware = createSagaMiddleware()
 
 const store = configureStore({
